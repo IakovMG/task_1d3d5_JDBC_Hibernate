@@ -15,8 +15,8 @@ public class Main {
         userService.createUsersTable();
 
         User user1 = new User("Mickey", "Mouse", (byte) 94);
-        User user2 = new User("Spike", "Spiegel", (byte) 91);
-        User user3 = new User("Donald", "Duck", (byte) 88);
+        User user2 = new User("Donald", "Duck", (byte) 88);
+        User user3 = new User("Spike", "Spiegel", (byte) 27);
         User user4 = new User("Khiro", "Khamada", (byte) 22);
 
 
@@ -31,7 +31,7 @@ public class Main {
             userService.saveUser(x.getName(), x.getLastName(), x.getAge());
             System.out.printf("Пользователь: %s %s добавлен в базу данных\n", x.getName(), x.getLastName());
         });
-        userService.getAllUsers().forEach(x -> System.out.println(x));
+        userService.getAllUsers().forEach(System.out::println);
         userService.cleanUsersTable();
         userService.dropUsersTable();
         userService.closeConnection();
