@@ -9,7 +9,7 @@ import java.util.List;
 
 public class UserServiceImpl implements UserService {
 
-    //private UserDao userDao;
+
     private UserDaoJDBCImpl userDao;
 
     public UserServiceImpl() {
@@ -45,7 +45,7 @@ public class UserServiceImpl implements UserService {
     }
 
 
-    public void closeConnection(){
+    public void closeConnection() {
         try {
             userDao.getDaoConnection().close();
         } catch (SQLException e) {

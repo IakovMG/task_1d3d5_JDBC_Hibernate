@@ -9,11 +9,11 @@ import java.util.List;
 
 public class UserDaoJDBCImpl implements UserDao {
 
-    private Connection connection = Util.getConnection();
+    private Connection connection;
 
 
     public UserDaoJDBCImpl() {
-
+        connection = Util.getConnection();
     }
 
     public void createUsersTable() {
@@ -27,6 +27,7 @@ public class UserDaoJDBCImpl implements UserDao {
 
         try (PreparedStatement preparedStatement = connection.prepareStatement(sqlCr)) {
             preparedStatement.executeUpdate();
+            connection.commit();
         } catch (SQLException ex) {
             ex.printStackTrace();
             try {
@@ -35,11 +36,7 @@ public class UserDaoJDBCImpl implements UserDao {
                 e.printStackTrace();
             }
         }
-        try {
-            connection.commit();
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
+
 
     }
 
@@ -49,6 +46,7 @@ public class UserDaoJDBCImpl implements UserDao {
 
         try (PreparedStatement preparedStatement = connection.prepareStatement(sqlDr)) {
             preparedStatement.executeUpdate();
+            connection.commit();
         } catch (SQLException ex) {
             ex.printStackTrace();
             try {
@@ -56,11 +54,6 @@ public class UserDaoJDBCImpl implements UserDao {
             } catch (SQLException e) {
                 e.printStackTrace();
             }
-        }
-        try {
-            connection.commit();
-        } catch (SQLException e) {
-            e.printStackTrace();
         }
 
 
@@ -76,6 +69,7 @@ public class UserDaoJDBCImpl implements UserDao {
             preparedStatement.setString(2, lastName);
             preparedStatement.setInt(3, age);
             preparedStatement.executeUpdate();
+            connection.commit();
         } catch (SQLException ex) {
             ex.printStackTrace();
             try {
@@ -83,11 +77,6 @@ public class UserDaoJDBCImpl implements UserDao {
             } catch (SQLException e) {
                 e.printStackTrace();
             }
-        }
-        try {
-            connection.commit();
-        } catch (SQLException e) {
-            e.printStackTrace();
         }
 
     }
@@ -99,6 +88,7 @@ public class UserDaoJDBCImpl implements UserDao {
         try (PreparedStatement preparedStatement = connection.prepareStatement(sqlD)) {
             preparedStatement.setLong(1, id);
             preparedStatement.executeUpdate();
+            connection.commit();
         } catch (SQLException ex) {
             ex.printStackTrace();
             try {
@@ -107,12 +97,6 @@ public class UserDaoJDBCImpl implements UserDao {
                 e.printStackTrace();
             }
         }
-        try {
-            connection.commit();
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-
 
     }
 
@@ -133,6 +117,7 @@ public class UserDaoJDBCImpl implements UserDao {
                 user.setAge(resultSet.getByte("age"));
 
                 userList.add(user);
+                connection.commit();
             }
         } catch (SQLException ex) {
             ex.printStackTrace();
@@ -142,12 +127,6 @@ public class UserDaoJDBCImpl implements UserDao {
                 e.printStackTrace();
             }
         }
-        try {
-            connection.commit();
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-
 
         return userList;
     }
@@ -156,25 +135,21 @@ public class UserDaoJDBCImpl implements UserDao {
 
         String sqlD = "DELETE FROM User";
 
-            try (PreparedStatement preparedStatement = connection.prepareStatement(sqlD)) {
-                preparedStatement.executeUpdate();
-            } catch (SQLException ex) {
-                ex.printStackTrace();
-                try {
-                    connection.rollback();
-                } catch (SQLException e) {
-                    e.printStackTrace();
-                }
-            }
-        try {
+        try (PreparedStatement preparedStatement = connection.prepareStatement(sqlD)) {
+            preparedStatement.executeUpdate();
             connection.commit();
-        } catch (SQLException e) {
-            e.printStackTrace();
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+            try {
+                connection.rollback();
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
         }
 
     }
 
-    public Connection getDaoConnection(){
+    public Connection getDaoConnection() {
         return connection;
     }
 
