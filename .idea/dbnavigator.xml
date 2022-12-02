@@ -39,7 +39,11 @@
     <connection id="d640ba3a-79dd-409e-aeb5-0226b7372e03" />
   </component>
   <component name="DBNavigator.Project.DatasetFilterManager">
-    <filter-actions connection-id="d640ba3a-79dd-409e-aeb5-0226b7372e03" dataset="myschemadb.user" active-filter-id="" />
+    <filter-actions connection-id="d640ba3a-79dd-409e-aeb5-0226b7372e03" dataset="myschemadb.user" active-filter-id="724d0871-5574-481c-9932-02a136b2c77d">
+      <filter id="724d0871-5574-481c-9932-02a136b2c77d" name="0" temporary="false" custom-name="false" type="basic" join-type="AND">
+        <condition column="id" operator="&gt;" value="0" active="true" />
+      </filter>
+    </filter-actions>
   </component>
   <component name="DBNavigator.Project.EditorStateManager">
     <last-used-providers />
